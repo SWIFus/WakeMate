@@ -132,6 +132,7 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
         guard let myCollection = collectionView else {
             return
         }
+        
         view.addSubview(myCollection)
     }
     
@@ -160,6 +161,8 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
     override func viewDidLayoutSubviews() { // for badge cv
         super.viewDidLayoutSubviews()
         collectionView?.frame = CGRect(x: 27, y: 366, width: view.frame.size.width, height: 60).integral
+        collectionView?.translatesAutoresizingMaskIntoConstraints = false
+        
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int { // set badge counts
