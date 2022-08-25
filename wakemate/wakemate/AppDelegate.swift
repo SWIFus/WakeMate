@@ -18,7 +18,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         
         window = UIWindow()
-        window?.rootViewController = ProfileViewController() // initial VC
+        window?.rootViewController = StartViewController() // initial VC
         window?.makeKeyAndVisible()
         return true
     }
