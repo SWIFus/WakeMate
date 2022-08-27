@@ -12,10 +12,8 @@
 		2427FC47289A9E0500C8B730 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2427FC46289A9E0500C8B730 /* ProfileViewController.swift */; };
 		2427FC4C289A9E0800C8B730 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2427FC4B289A9E0800C8B730 /* Assets.xcassets */; };
 		2427FC4F289A9E0800C8B730 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2427FC4D289A9E0800C8B730 /* LaunchScreen.storyboard */; };
-		2427FC81289E000700C8B730 /* BadgeCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2427FC80289E000700C8B730 /* BadgeCollectionViewCell.swift */; };
 		249152A2289F91C300211D08 /* TeamDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 249152A1289F91C300211D08 /* TeamDetailViewController.swift */; };
 		249152A4289F932200211D08 /* TeamRankViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 249152A3289F932200211D08 /* TeamRankViewController.swift */; };
-		249152A6289F953900211D08 /* TeamRankCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 249152A5289F953900211D08 /* TeamRankCollectionViewCell.swift */; };
 		24A84E5328A730AD00C96899 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24A84E5228A730AC00C96899 /* HomeViewController.swift */; };
 		24A84E5528A7311100C96899 /* ThemeShopViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24A84E5428A7311100C96899 /* ThemeShopViewController.swift */; };
 		24A84E5728A7315A00C96899 /* TabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24A84E5628A7315A00C96899 /* TabBarViewController.swift */; };
@@ -37,10 +35,8 @@
 		2427FC4B289A9E0800C8B730 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		2427FC4E289A9E0800C8B730 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		2427FC50289A9E0800C8B730 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		2427FC80289E000700C8B730 /* BadgeCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BadgeCollectionViewCell.swift; sourceTree = "<group>"; };
 		249152A1289F91C300211D08 /* TeamDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeamDetailViewController.swift; sourceTree = "<group>"; };
 		249152A3289F932200211D08 /* TeamRankViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeamRankViewController.swift; sourceTree = "<group>"; };
-		249152A5289F953900211D08 /* TeamRankCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeamRankCollectionViewCell.swift; sourceTree = "<group>"; };
 		24A84E5228A730AC00C96899 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		24A84E5428A7311100C96899 /* ThemeShopViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeShopViewController.swift; sourceTree = "<group>"; };
 		24A84E5628A7315A00C96899 /* TabBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarViewController.swift; sourceTree = "<group>"; };
@@ -96,15 +92,13 @@
 				24A84E5428A7311100C96899 /* ThemeShopViewController.swift */,
 				2427FC46289A9E0500C8B730 /* ProfileViewController.swift */,
 				2427FC4B289A9E0800C8B730 /* Assets.xcassets */,
+				24FAE63828B9539800C923BE /* Arimo-BoldItalic.ttf */,
 				2427FC4D289A9E0800C8B730 /* LaunchScreen.storyboard */,
 				2427FC50289A9E0800C8B730 /* Info.plist */,
-				2427FC80289E000700C8B730 /* BadgeCollectionViewCell.swift */,
-				249152A5289F953900211D08 /* TeamRankCollectionViewCell.swift */,
-				24FAE62C28B89C8000C923BE /* TeamRankTableViewCell.swift */,
+				24FAE63428B8C6E900C923BE /* Model.swift */,
 				24FAE63028B8AC2200C923BE /* MateCell.swift */,
 				24FAE62E28B8AA1400C923BE /* MateCollectionViewFlowLayout.swift */,
-				24FAE63428B8C6E900C923BE /* Model.swift */,
-				24FAE63828B9539800C923BE /* Arimo-BoldItalic.ttf */,
+				24FAE62C28B89C8000C923BE /* TeamRankTableViewCell.swift */,
 				24FAE63A28BA63F000C923BE /* BadgeCell.swift */,
 				24FAE63C28BA643B00C923BE /* BadgeCollectionViewFlowLayout.swift */,
 			);
@@ -190,10 +184,8 @@
 				2427FC43289A9E0500C8B730 /* AppDelegate.swift in Sources */,
 				24A84E5328A730AD00C96899 /* HomeViewController.swift in Sources */,
 				24FAE62D28B89C8000C923BE /* TeamRankTableViewCell.swift in Sources */,
-				249152A6289F953900211D08 /* TeamRankCollectionViewCell.swift in Sources */,
 				24FAE60628B74E3B00C923BE /* StartViewController.swift in Sources */,
 				24A84E5528A7311100C96899 /* ThemeShopViewController.swift in Sources */,
-				2427FC81289E000700C8B730 /* BadgeCollectionViewCell.swift in Sources */,
 				24FAE63128B8AC2200C923BE /* MateCell.swift in Sources */,
 				2427FC45289A9E0500C8B730 /* SceneDelegate.swift in Sources */,
 				24FAE63B28BA63F000C923BE /* BadgeCell.swift in Sources */,

@@ -13,16 +13,16 @@ let mateImageSet = [
     UIImage(named: "blueMate"),
     UIImage(named: "purpleMate"),
     UIImage(named: "yellowMate"),
-    UIImage(named: "woman1"),
-    UIImage(named: "man1"),
-    UIImage(named: "woman2"),
-    UIImage(named: "man2"),
-    UIImage(named: "woman3"),
-    UIImage(named: "man3"),
-    UIImage(named: "woman4"),
-    UIImage(named: "man4"),
-    UIImage(named: "woman5"),
-    UIImage(named: "man5"),
+//    UIImage(named: "woman1"),
+//    UIImage(named: "man1"),
+//    UIImage(named: "woman2"),
+//    UIImage(named: "man2"),
+//    UIImage(named: "woman3"),
+//    UIImage(named: "man3"),
+//    UIImage(named: "woman4"),
+//    UIImage(named: "man4"),
+//    UIImage(named: "woman5"),
+//    UIImage(named: "man5"),
 ]
 
 //let nameSet = [
@@ -250,7 +250,7 @@ class TeamDetailViewController: UIViewController {
     }
     
     func setView() {
-        view.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 1)
+        view.backgroundColor = .black
         
         view.addSubview(teamLabel)
         

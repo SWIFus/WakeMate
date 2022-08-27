@@ -10,7 +10,7 @@ import UIKit
 let badgeImageSet = [
     UIImage(named: "badgeEgg"),
     UIImage(named: "badgeBread"),
-    UIImage(named: "greenMate"),
+//    UIImage(named: "greenMate"),
     UIImage(named: "redMate"),
     UIImage(named: "blueMate"),
     UIImage(named: "purpleMate"),
@@ -40,15 +40,15 @@ class ProfileViewController: UIViewController {
         
         view.backgroundColor = .white
         view.layer.backgroundColor = UIColor.clear.cgColor
-
-        view.layer.cornerRadius = 30
+//        view.layer.backgroundColor = UIColor.systemPink.cgColor
+//        view.layer.cornerRadius = 30
         
         return view
     }()
     
     let badgeFlowLayout: BadgeCollectionViewFlowLayout = {
         let layout = BadgeCollectionViewFlowLayout()
-        layout.cellSpacing = 15
+        layout.cellSpacing = 10
         layout.numOfColumns = 1
         return layout
     }()
@@ -62,9 +62,9 @@ class ProfileViewController: UIViewController {
         view.showsVerticalScrollIndicator = false
         view.contentInset = .zero
         view.backgroundColor = .clear
+//        view.backgroundColor = .systemCyan
         view.clipsToBounds = true
         view.register(BadgeCell.self, forCellWithReuseIdentifier: BadgeCell.identifier)
-        view.translatesAutoresizingMaskIntoConstraints = false
         
         return view
     }()
@@ -76,8 +76,8 @@ class ProfileViewController: UIViewController {
         nameLabel.frame = CGRect(x: 0, y: 0, width: 207, height: 38)
         nameLabel.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 1)
         nameLabel.textColor = UIColor(red: 1, green: 1, blue: 1, alpha: 1)
-        nameLabel.font = .systemFont(ofSize: 15)
-        nameLabel.text = "NAME"
+        nameLabel.font = .systemFont(ofSize: 30)
+        nameLabel.text = StartViewController.Values.nameValue
         
         return nameLabel
     }()
@@ -96,13 +96,14 @@ class ProfileViewController: UIViewController {
         return profileLabel
     }()
     
-    let profileImg: UILabel = {
-        let profileImgBox = UILabel()
+    let profileImg: UIImageView = {
+        let profileImgBox = UIImageView()
         
         profileImgBox.frame = CGRect(x: 0, y: 0, width: 103, height: 108)
         profileImgBox.backgroundColor = UIColor(red: 0.64, green: 0.64, blue: 0.64, alpha: 1)
         profileImgBox.layer.masksToBounds = true
         profileImgBox.layer.cornerRadius = 25
+        profileImgBox.image = UIImage(named: "greenMate")
         
         return profileImgBox
     }()
@@ -162,24 +163,25 @@ class ProfileViewController: UIViewController {
     }
     
     func setAutoLayouts() {
-        self.view.addSubview(badge)
-        self.view.addSubview(badgeView)
-        self.badgeView.addSubview(self.badgeCollectionView)
-        
-        badgeAutoLayout()
-        badgeViewAutoLayout()
-        badgeCollectionViewAutoLayout()
-        
-        self.badgeCollectionView.dataSource = self
-        self.badgeCollectionView.delegate = self
-        
-        self.view.addSubview(name)
-        nameAutoLayout()
-        
         self.view.addSubview(profile)
         self.view.addSubview(profileImg)
         profileAutoLayout()
         profileImgAutoLayout()
+        
+        self.view.addSubview(name)
+        nameAutoLayout()
+        
+        self.view.addSubview(badge)
+        badgeAutoLayout()
+        
+        self.view.addSubview(badgeView)
+        badgeViewAutoLayout()
+        
+        self.badgeView.addSubview(self.badgeCollectionView)
+        badgeCollectionViewAutoLayout()
+        
+        self.badgeCollectionView.dataSource = self
+        self.badgeCollectionView.delegate = self
         
         self.view.addSubview(team)
         teamAutoLayout()
@@ -216,7 +218,7 @@ extension ProfileViewController {
         badge.translatesAutoresizingMaskIntoConstraints = false
 
         NSLayoutConstraint.activate([
-            badge.topAnchor.constraint(equalTo: self.profileImg.bottomAnchor, constant: 20),
+            badge.topAnchor.constraint(equalTo: self.profileImg.bottomAnchor, constant: self.profileImg.frame.size.height*0.4),
             badge.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: self.view.frame.size.width*0.1),
         ])
     }
@@ -225,9 +227,9 @@ extension ProfileViewController {
         
         NSLayoutConstraint.activate([
             badgeView.topAnchor.constraint(equalTo: self.badge.bottomAnchor, constant: 10),
-            badgeView.bottomAnchor.constraint(equalTo: self.badge.bottomAnchor, constant: 80),
-            badgeView.leadingAnchor.constraint(equalTo: self.badge.leadingAnchor, constant: 5),
-            badgeView.trailingAnchor.constraint(equalTo: self.badge.trailingAnchor, constant: -5)
+            badgeView.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
+            badgeView.widthAnchor.constraint(equalToConstant: self.view.frame.size.width*0.8),
+            badgeView.heightAnchor.constraint(equalToConstant: self.view.frame.size.width*0.2),
         ])
     }
     func badgeCollectionViewAutoLayout() {
@@ -237,7 +239,7 @@ extension ProfileViewController {
             self.badgeCollectionView.leadingAnchor.constraint(equalTo: self.badgeView.leadingAnchor),
             self.badgeCollectionView.trailingAnchor.constraint(equalTo: self.badgeView.trailingAnchor),
             self.badgeCollectionView.centerYAnchor.constraint(equalTo: self.badgeView.centerYAnchor),
-            self.badgeCollectionView.heightAnchor.constraint(equalToConstant: self.badgeView.frame.size.height*0.9)
+            self.badgeCollectionView.heightAnchor.constraint(equalToConstant: self.view.frame.size.height*0.08)
         ])
         
     }
@@ -276,8 +278,8 @@ extension ProfileViewController {
     }
     func teamBoxAutoLayout() {
         teamBox.translatesAutoresizingMaskIntoConstraints = false
-        teamBox.widthAnchor.constraint(equalToConstant: 320).isActive = true
-        teamBox.heightAnchor.constraint(equalToConstant: 80).isActive = true
+        teamBox.widthAnchor.constraint(equalToConstant: self.view.frame.size.width*0.8).isActive = true
+        teamBox.heightAnchor.constraint(equalToConstant: self.view.frame.size.width*0.2).isActive = true
         //teamBox.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 25).isActive = true
         teamBox.centerXAnchor.constraint(equalTo: self.view.centerXAnchor).isActive = true
         teamBox.topAnchor.constraint(equalTo: self.view.topAnchor, constant: 520).isActive = true

@@ -134,10 +134,10 @@ class TeamRankViewController: UIViewController {
     
     func layout() {
         view.addSubview(table)
-        view.backgroundColor = UIColor(red: 0.121, green: 0.121, blue: 0.121, alpha: 1)
+        view.backgroundColor = .black
         table.separatorColor = .clear
 //        table.backgroundColor = UIColor(red: 0.121, green: 0.121, blue: 0.121, alpha: 1)
-        table.backgroundColor = .systemGray
+        table.backgroundColor = .clear
         
         
         setTableAutoLayout()
@@ -146,8 +146,8 @@ class TeamRankViewController: UIViewController {
     func setTableAutoLayout() {
         table.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            table.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: self.view.frame.size.height*0.1),
-            table.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -(self.view.frame.size.height*0.1)),
+            table.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: self.view.frame.size.height*0.05),
+            table.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -(self.view.frame.size.height*0.05)),
             table.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
             table.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
         ])
@@ -199,7 +199,7 @@ extension TeamRankViewController: UITableViewDataSource {
         }
         
         
-        cell.backgroundColor = UIColor(red: 0.121, green: 0.121, blue: 0.121, alpha: 1)
+        cell.backgroundColor = .clear
         
         return cell
     }

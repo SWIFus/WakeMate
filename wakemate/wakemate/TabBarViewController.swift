@@ -13,7 +13,9 @@ class TabBarViewController: UITabBarController {
         super.viewDidLoad()
         
 //        UITabBar.appearance().barStyle = .black
-        UITabBar.appearance().backgroundColor = .clear
+//        UITabBar.appearance().backgroundColor = .clear
+        UITabBar.appearance().backgroundColor = .black
+//        UITabBar.appearance().backgroundColor = .black
 //        UITabBar.appearance().barTintColor = .systemYellow
 
         let vc1 = HomeViewController()

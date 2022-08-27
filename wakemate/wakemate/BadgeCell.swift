@@ -17,6 +17,7 @@ class BadgeCell: UICollectionViewCell {
         view.layer.masksToBounds = true
         view.layer.cornerRadius = 25
         view.clipsToBounds = true
+//        view.backgroundColor = .systemMint
         return view
     }()
     
