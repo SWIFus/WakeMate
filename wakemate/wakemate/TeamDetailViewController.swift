@@ -266,6 +266,8 @@ class TeamDetailViewController: UIViewController {
         setMateRankTable()
     }
     
+//MARK: Setting functions
+    
     func setView() {
         view.backgroundColor = .black
         
@@ -345,8 +347,8 @@ class TeamDetailViewController: UIViewController {
     func setMateRankTable() {
         teamFrontCardView.addSubview(table)
         table.separatorColor = .clear
-//        table.backgroundColor = UIColor(red: 0.121, green: 0.121, blue: 0.121, alpha: 1)
-        table.backgroundColor = UIColor.init(rgb: 0xD9D9D9)
+        table.backgroundColor = UIColor(red: 0.6, green: 0.6, blue: 0.6, alpha: 1)
+//        table.backgroundColor = UIColor.init(rgb: 0xD9D9D9)
         table.layer.cornerRadius = 15
         setMateRankTableAutoLayout()
     }
