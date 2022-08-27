@@ -114,7 +114,7 @@ class TeamRankViewController: UIViewController {
 
     
     let sect: [Sect] = [
-        Sect(teams: ["Apple", "Swift", "iOS", "Wake", "Mate", "Early", "Wakeup"], ranks: ["1", "2", "3", "4", "5", "6", "7"]),
+        Sect(teams: ["HUFSMate", "Swift", "iOS", "Wake", "Mate", "Early", "Wakeup"], ranks: ["1", "2", "3", "4", "5", "6", "7"]),
     ]
     
     

@@ -40,12 +40,29 @@ let mateImageSet = [
 
 class TeamDetailViewController: UIViewController {
     
+    let table = UITableView()
+    
+    class Sect {
+        init(teams: [String], ranks:[String]) {
+            self.teams = teams
+            self.ranks = ranks
+        }
+        
+        let teams: [String]
+        let ranks: [String]
+    }
+
+    
+    let sect: [Sect] = [
+        Sect(teams: ["Onve", "Crystal", "Tintin", "Lee", "JIN", "hOng"], ranks: ["1", "2", "3", "4", "5", "6"]),
+    ]
+    
     var frontCard: Bool = true
     
 // MARK: - 팀 타이틀
     let teamLabel: UILabel = {
         let label = UILabel()
-        label.text = "TEAM : NAME"
+        label.text = "TEAM : HUFSMate"
         label.font =  UIFont.boldSystemFont(ofSize:30)
         label.textColor = UIColor.init(rgb: 0xFFD80D)
         return label
@@ -225,8 +242,6 @@ class TeamDetailViewController: UIViewController {
 
         return view
     }()
-
-    
     
     let switchButton: UIButton = {
         let switchBtn = UIButton()
@@ -247,6 +262,8 @@ class TeamDetailViewController: UIViewController {
         print("VIEW LOADED")
         setView()
         setAutoLayouts()
+        attribute()
+        setMateRankTable()
     }
     
     func setView() {
@@ -318,7 +335,21 @@ class TeamDetailViewController: UIViewController {
         switchButtonAutoLayout()
     }
     
-//    var test1 = true
+    func attribute() {
+        table.register(MateRankTableViewCell.self, forCellReuseIdentifier: MateRankTableViewCell.cellID)
+        table.delegate = self
+        table.dataSource = self
+        
+    }
+    
+    func setMateRankTable() {
+        teamFrontCardView.addSubview(table)
+        table.separatorColor = .clear
+//        table.backgroundColor = UIColor(red: 0.121, green: 0.121, blue: 0.121, alpha: 1)
+        table.backgroundColor = UIColor.init(rgb: 0xD9D9D9)
+        table.layer.cornerRadius = 15
+        setMateRankTableAutoLayout()
+    }
     
     @objc func switchButtonPressed(_ sender:UIButton!) {
         if frontCard {
@@ -444,6 +475,16 @@ extension TeamDetailViewController {
         ])
     }
     
+    func setMateRankTableAutoLayout() {
+        table.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            table.topAnchor.constraint(equalTo: self.attendanceLabel.bottomAnchor, constant: self.teamFrontCardView.frame.size.height*0.05),
+            table.bottomAnchor.constraint(equalTo: self.switchButton.topAnchor, constant: -(self.teamFrontCardView.frame.size.height*0.05)),
+            table.leadingAnchor.constraint(equalTo: self.teamFrontCardView.leadingAnchor, constant: 10),
+            table.trailingAnchor.constraint(equalTo: self.teamFrontCardView.trailingAnchor, constant: -10),
+        ])
+    }
+    
     func teamBackCardViewAutoLayout() {
         teamBackCardView.translatesAutoresizingMaskIntoConstraints = false
         teamBackCardView.widthAnchor.constraint(equalToConstant: self.teamFrontCardView.frame.size.width).isActive = true
@@ -534,4 +575,60 @@ extension TeamDetailViewController: UICollectionViewDelegateFlowLayout {
 
 func getMateImages() -> [UIImage?] {
     mateImageSet
+}
+
+extension TeamDetailViewController: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        table.deselectRow(at: indexPath, animated: true)
+        print("---\(sect[indexPath.section].teams[indexPath.row])---")
+    }
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 100.0
+    }
+    
+}
+
+
+extension TeamDetailViewController: UITableViewDataSource {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return sect[section].teams.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = table.dequeueReusableCell(withIdentifier: MateRankTableViewCell.cellID, for: indexPath) as! MateRankTableViewCell
+        
+//        cell.nameLabel.text = sect[indexPath.row].name
+        cell.nameLabel.text = sect[indexPath.section].teams[indexPath.row]
+        cell.nameLabel.textColor = .white
+        cell.nameLabel.font = .boldSystemFont(ofSize: 20)
+        
+        if indexPath.row == 0 {
+            cell.rankLabel.isHidden = true
+            cell.rankImage.isHidden = false
+            cell.rankImage.image = UIImage(named: "firstPlace")
+        } else if indexPath.row == 1 {
+            cell.rankLabel.isHidden = true
+            cell.rankImage.isHidden = false
+            cell.rankImage.image = UIImage(named: "secondPlace")
+        } else if indexPath.row == 2 {
+            cell.rankLabel.isHidden = true
+            cell.rankImage.isHidden = false
+            cell.rankImage.image = UIImage(named: "thirdPlace")
+        } else {
+            cell.rankLabel.isHidden = false
+            cell.rankImage.isHidden = true
+            cell.rankLabel.text = sect[indexPath.section].ranks[indexPath.row]
+            cell.rankLabel.textColor = .white
+            cell.rankLabel.font = .systemFont(ofSize: 15)
+        }
+        
+        
+        cell.backgroundColor = .clear
+        
+        return cell
+    }
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
+        sect.count
+    }
 }
