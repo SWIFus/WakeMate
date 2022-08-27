@@ -25,6 +25,8 @@
 		24FAE63128B8AC2200C923BE /* MateCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24FAE63028B8AC2200C923BE /* MateCell.swift */; };
 		24FAE63528B8C6E900C923BE /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24FAE63428B8C6E900C923BE /* Model.swift */; };
 		24FAE63928B9539800C923BE /* Arimo-BoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 24FAE63828B9539800C923BE /* Arimo-BoldItalic.ttf */; };
+		24FAE63B28BA63F000C923BE /* BadgeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24FAE63A28BA63F000C923BE /* BadgeCell.swift */; };
+		24FAE63D28BA643B00C923BE /* BadgeCollectionViewFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24FAE63C28BA643B00C923BE /* BadgeCollectionViewFlowLayout.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -49,6 +51,8 @@
 		24FAE63028B8AC2200C923BE /* MateCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MateCell.swift; sourceTree = "<group>"; };
 		24FAE63428B8C6E900C923BE /* Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
 		24FAE63828B9539800C923BE /* Arimo-BoldItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Arimo-BoldItalic.ttf"; sourceTree = "<group>"; };
+		24FAE63A28BA63F000C923BE /* BadgeCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BadgeCell.swift; sourceTree = "<group>"; };
+		24FAE63C28BA643B00C923BE /* BadgeCollectionViewFlowLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BadgeCollectionViewFlowLayout.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -101,6 +105,8 @@
 				24FAE62E28B8AA1400C923BE /* MateCollectionViewFlowLayout.swift */,
 				24FAE63428B8C6E900C923BE /* Model.swift */,
 				24FAE63828B9539800C923BE /* Arimo-BoldItalic.ttf */,
+				24FAE63A28BA63F000C923BE /* BadgeCell.swift */,
+				24FAE63C28BA643B00C923BE /* BadgeCollectionViewFlowLayout.swift */,
 			);
 			path = wakemate;
 			sourceTree = "<group>";
@@ -178,6 +184,7 @@
 			files = (
 				24FAE63528B8C6E900C923BE /* Model.swift in Sources */,
 				24FAE62F28B8AA1400C923BE /* MateCollectionViewFlowLayout.swift in Sources */,
+				24FAE63D28BA643B00C923BE /* BadgeCollectionViewFlowLayout.swift in Sources */,
 				249152A2289F91C300211D08 /* TeamDetailViewController.swift in Sources */,
 				2427FC47289A9E0500C8B730 /* ProfileViewController.swift in Sources */,
 				2427FC43289A9E0500C8B730 /* AppDelegate.swift in Sources */,
@@ -189,6 +196,7 @@
 				2427FC81289E000700C8B730 /* BadgeCollectionViewCell.swift in Sources */,
 				24FAE63128B8AC2200C923BE /* MateCell.swift in Sources */,
 				2427FC45289A9E0500C8B730 /* SceneDelegate.swift in Sources */,
+				24FAE63B28BA63F000C923BE /* BadgeCell.swift in Sources */,
 				24A84E5728A7315A00C96899 /* TabBarViewController.swift in Sources */,
 				249152A4289F932200211D08 /* TeamRankViewController.swift in Sources */,
 			);

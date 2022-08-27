@@ -17,23 +17,56 @@ let badgeImageSet = [
     UIImage(named: "yellowMate"),
 ]
 
-class ProfileViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+class ProfileViewController: UIViewController {
     
     private var collectionView: UICollectionView? // badge collection view
 
     
 //MARK: Badge
     let badge: UILabel = {
-        let badgeLabel = UILabel()
+        let label = UILabel()
+        label.font =  UIFont.boldSystemFont(ofSize:15)
+//        label.font = UIFont(name: "Arimo-BoldItalic", size: 15)
+        label.text = "BADGE"
+        label.layer.masksToBounds = true
+        label.backgroundColor = UIColor.clear
+        label.textColor = .white
+//        label.layer.cornerRadius = 5
+        return label
+    }()
+    
+    let badgeView: UIView = {
+        let view = UIView()
         
-        badgeLabel.frame = CGRect(x: 0, y: 0, width: 61, height: 44)
-        badgeLabel.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 1)
-        badgeLabel.textColor = UIColor(red: 1, green: 1, blue: 1, alpha: 1)
-        badgeLabel.textAlignment = .center
-        badgeLabel.font = .boldSystemFont(ofSize: 15)
-        badgeLabel.text = "BADGE"
+        view.backgroundColor = .white
+        view.layer.backgroundColor = UIColor.clear.cgColor
+
+        view.layer.cornerRadius = 30
         
-        return badgeLabel
+        return view
+    }()
+    
+    let badgeFlowLayout: BadgeCollectionViewFlowLayout = {
+        let layout = BadgeCollectionViewFlowLayout()
+        layout.cellSpacing = 15
+        layout.numOfColumns = 1
+        return layout
+    }()
+    
+    var dataSource = getBadgeImages()
+    
+    lazy var badgeCollectionView: UICollectionView = {
+        let view = UICollectionView(frame: .zero, collectionViewLayout: self.badgeFlowLayout)
+        view.isScrollEnabled = true
+        view.showsHorizontalScrollIndicator = true
+        view.showsVerticalScrollIndicator = false
+        view.contentInset = .zero
+        view.backgroundColor = .clear
+        view.clipsToBounds = true
+        view.register(BadgeCell.self, forCellWithReuseIdentifier: BadgeCell.identifier)
+        view.translatesAutoresizingMaskIntoConstraints = false
+        
+        return view
     }()
     
 //MARK: Name
@@ -119,71 +152,42 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
     override func viewDidLoad() {
     
         setView()
-        
-
-        setAutoLayouts()
-        
-        
-        //MARK: BADGE CollectionView
-        let layout = UICollectionViewFlowLayout()
-        layout.scrollDirection = .horizontal
-        layout.itemSize = CGSize(width: 60, height: 60)
-        layout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
-
-        collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
-
-        collectionView?.register(BadgeCollectionViewCell.self, forCellWithReuseIdentifier: BadgeCollectionViewCell.identifier)
-
-        collectionView?.showsHorizontalScrollIndicator = false
-        collectionView?.delegate = self
-        collectionView?.dataSource = self
-        collectionView?.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 1)
-        
-        guard let myCollection = collectionView else {
-            return
-        }
-        
-        view.addSubview(myCollection)
     }
+    
     
     func setView() {
         view.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 1)
+        
+        setAutoLayouts()
     }
     
     func setAutoLayouts() {
-        view.addSubview(badge)
-        view.addSubview(name)
-        view.addSubview(profile)
-        view.addSubview(profileImg)
-        view.addSubview(team)
-        //view.addSubview(teamBox)
-        view.addSubview(teamButton)
+        self.view.addSubview(badge)
+        self.view.addSubview(badgeView)
+        self.badgeView.addSubview(self.badgeCollectionView)
         
         badgeAutoLayout()
+        badgeViewAutoLayout()
+        badgeCollectionViewAutoLayout()
+        
+        self.badgeCollectionView.dataSource = self
+        self.badgeCollectionView.delegate = self
+        
+        self.view.addSubview(name)
         nameAutoLayout()
+        
+        self.view.addSubview(profile)
+        self.view.addSubview(profileImg)
         profileAutoLayout()
         profileImgAutoLayout()
-        teamAutoLayout()
-        //teamBoxAutoLayout()
-        teamButtonAutoLayout()
-    }
-    
-    override func viewDidLayoutSubviews() { // for badge cv
-        super.viewDidLayoutSubviews()
-        collectionView?.frame = CGRect(x: 27, y: 366, width: view.frame.size.width, height: 60).integral
-        collectionView?.translatesAutoresizingMaskIntoConstraints = false
         
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int { // set badge counts
-        var badgeCount = badgeImageSet.count
-        return badgeCount
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell { // for badge cv
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: BadgeCollectionViewCell.identifier, for: indexPath) as! BadgeCollectionViewCell
-        cell.configure(with: "")
-        return cell
+        self.view.addSubview(team)
+        teamAutoLayout()
+        //view.addSubview(teamBox)
+        //teamBoxAutoLayout()
+        self.view.addSubview(teamButton)
+        teamButtonAutoLayout()
+        
     }
     
     @objc func teamButtonPressed(_ sender:UIButton!) {
@@ -192,7 +196,6 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
         let teamDetailVC = TeamDetailViewController()
         self.navigationController?.pushViewController(teamDetailVC, animated: true)
         self.present(teamDetailVC, animated: true)
-        
         
 //        self.present(TeamDetailViewController(), animated: true)
         
@@ -210,17 +213,33 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
 
 extension ProfileViewController {
     func badgeAutoLayout() {
-        let guide = self.view.safeAreaLayoutGuide
-        let height = guide.layoutFrame.height
-        let width = guide.layoutFrame.width
-        
         badge.translatesAutoresizingMaskIntoConstraints = false
-        badge.widthAnchor.constraint(equalToConstant: 61).isActive = true
-        badge.heightAnchor.constraint(equalToConstant: 44).isActive = true
-//        badge.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 35).isActive = true
-//        badge.topAnchor.constraint(equalTo: self.view.topAnchor, constant: 307).isActive = true
-        badge.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: width * 0.1).isActive = true
-        badge.topAnchor.constraint(equalTo: self.view.topAnchor, constant: height * 0.35).isActive = true
+
+        NSLayoutConstraint.activate([
+            badge.topAnchor.constraint(equalTo: self.profileImg.bottomAnchor, constant: 20),
+            badge.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: self.view.frame.size.width*0.1),
+        ])
+    }
+    func badgeViewAutoLayout() {
+        badgeView.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.activate([
+            badgeView.topAnchor.constraint(equalTo: self.badge.bottomAnchor, constant: 10),
+            badgeView.bottomAnchor.constraint(equalTo: self.badge.bottomAnchor, constant: 80),
+            badgeView.leadingAnchor.constraint(equalTo: self.badge.leadingAnchor, constant: 5),
+            badgeView.trailingAnchor.constraint(equalTo: self.badge.trailingAnchor, constant: -5)
+        ])
+    }
+    func badgeCollectionViewAutoLayout() {
+        badgeCollectionView.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.activate([
+            self.badgeCollectionView.leadingAnchor.constraint(equalTo: self.badgeView.leadingAnchor),
+            self.badgeCollectionView.trailingAnchor.constraint(equalTo: self.badgeView.trailingAnchor),
+            self.badgeCollectionView.centerYAnchor.constraint(equalTo: self.badgeView.centerYAnchor),
+            self.badgeCollectionView.heightAnchor.constraint(equalToConstant: self.badgeView.frame.size.height*0.9)
+        ])
+        
     }
     func nameAutoLayout() {
         name.translatesAutoresizingMaskIntoConstraints = false
@@ -274,4 +293,37 @@ extension ProfileViewController {
         teamButton.topAnchor.constraint(equalTo: self.view.centerYAnchor, constant: height * 0.1).isActive = true
     }
     
+}
+
+extension ProfileViewController: UICollectionViewDataSource {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        self.dataSource.count
+    }
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: BadgeCell.identifier, for: indexPath) as! BadgeCell
+        cell.prepare(image: self.dataSource[indexPath.item])
+        return cell
+    }
+}
+
+extension ProfileViewController: UICollectionViewDelegateFlowLayout {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        guard let flowLayout = collectionViewLayout as? BadgeCollectionViewFlowLayout, flowLayout.numOfColumns > 0 else { fatalError() }
+        
+//        let widthOfCells = collectionView.bounds.width - (collectionView.contentInset.left + collectionView.contentInset.right)
+        let widthOfCells = collectionView.bounds.height
+        let widthOfSpacing = CGFloat(flowLayout.numOfColumns - 1) * flowLayout.cellSpacing
+        let width = (widthOfCells - widthOfSpacing) / CGFloat(flowLayout.numOfColumns)
+        
+        return CGSize(width: width, height: width * flowLayout.ratioHeighttoWidth)
+
+    }
+
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        
+    }
+}
+
+func getBadgeImages() -> [UIImage?] {
+    badgeImageSet
 }

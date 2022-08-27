@@ -183,12 +183,49 @@ class TeamDetailViewController: UIViewController {
     let teamBackCardView: UIView = {
         let teamBackCard = UIView()
         
-//        teamBackCard.frame = CGRect(x: 0, y: 0, width: 310, height: 600)
-        teamBackCard.backgroundColor = .red
+        teamBackCard.frame = CGRect(x: 0, y: 0, width: 310, height: 600)
+//        teamBackCard.backgroundColor = .red
+        teamBackCard.backgroundColor = UIColor(red: 0.9, green: 0.9, blue: 0.9, alpha: 1)
+        teamBackCard.clipsToBounds = true
         teamBackCard.layer.cornerRadius = 25
         
         return teamBackCard
     }()
+    
+//MARK: - Dark Header Back
+    let darkViewBack: UIView = {
+        let header = UIView()
+        header.backgroundColor = UIColor(red: 0.41, green: 0.41, blue: 0.41, alpha: 1)
+//        header.backgroundColor = .red
+        return header
+    }()
+        
+//MARK: - Wake Up Time Back
+    let wakeUpTimeLabelBack: UILabel = {
+        let label = UILabel()
+        label.text = "AM 7 : 00"
+        //label.font = UIFont(name: "archivo-narrow.bold", size: 30)
+        label.font =  UIFont.boldSystemFont(ofSize:30)
+        label.textColor = UIColor.init(rgb: 0xFFD80D)
+        return label
+    }()
+    
+//MARK: let scrollview
+    let scrollView: UIScrollView = {
+        let scrollView = UIScrollView()
+//        scrollView.backgroundColor = .blue
+        scrollView.translatesAutoresizingMaskIntoConstraints = false
+        scrollView.delaysContentTouches = true
+        scrollView.backgroundColor = .clear
+        return scrollView
+    }()
+    
+    let scrollAddView: UIView = {
+        let view = UIView()
+
+        return view
+    }()
+
     
     
     let switchButton: UIButton = {
@@ -222,47 +259,62 @@ class TeamDetailViewController: UIViewController {
         setFrontCardView()
         
         view.addSubview(switchButton)
-        
-        
     }
     
     func setFrontCardView() {
-        self.teamFrontCardView.addSubview(descriptionLabel)
         teamFrontCardViewAutoLayout()
+        
+        self.teamFrontCardView.addSubview(descriptionLabel)
+        descriptionLabelAutoLayout()
+        
         self.teamFrontCardView.addSubview(darkView)
         darkViewAutoLayout()
+        
         self.darkView.addSubview(wakeUpTimeLabel)
         wakeUpTimeLabelAutoLayout()
+        
         self.teamFrontCardView.addSubview(detailView)
         detailViewAutoLayout()
+        
         self.detailView.addSubview(detailTeamLabel)
         detailTeamLabelAutoLayout()
+        
         self.teamFrontCardView.addSubview(mateLabel)
         mateLabelAutoLayout()
+        
         self.teamFrontCardView.addSubview(mateView)
         mateViewAutoLayout()
+        
         self.mateView.addSubview(self.mateCollectionView)
         mateCollectionViewAutoLayout()
+        
         self.mateCollectionView.dataSource = self
         self.mateCollectionView.delegate = self
+        
         self.teamFrontCardView.addSubview(attendanceLabel)
         attendanceLabelAutoLayout()
+        
+        
     }
     
     func setBackCardView() {
+        teamBackCardViewAutoLayout()
         
+        self.teamBackCardView.addSubview(darkViewBack)
+        darkViewBackAutoLayout()
+        
+        self.darkViewBack.addSubview(wakeUpTimeLabelBack)
+        wakeUpTimeLabelBackAutoLayout()
+        
+        self.teamBackCardView.addSubview(scrollView)
+        scrollViewAutoLayout()
+        
+        self.scrollView.addSubview(scrollAddView)
+        scrollAddViewAutoLayout()
     }
     
     func setAutoLayouts() {
         teamLabelAutoLayout()
-        
-//        teamDetailCardViewAutoLayout()
-        
-//        teamFrontCardViewAutoLayout()
-        descriptionLabelAutoLayout()
-        
-//        teamBackCardViewAutoLayout()
-        
         switchButtonAutoLayout()
     }
     
@@ -272,7 +324,7 @@ class TeamDetailViewController: UIViewController {
         if frontCard {
             frontCard = false
             teamFrontCardView.addSubview(teamBackCardView)
-            teamBackCardViewAutoLayout()
+            setBackCardView()
             UIView.transition(with: teamFrontCardView, duration: 0.5, options: .transitionFlipFromLeft, animations: nil, completion: nil)
             UIView.transition(with: switchButton, duration: 0.5, options: .transitionFlipFromLeft, animations: nil, completion: nil)
         } else {
@@ -398,6 +450,45 @@ extension TeamDetailViewController {
         teamBackCardView.heightAnchor.constraint(equalToConstant: self.teamFrontCardView.frame.size.height).isActive = true
         teamBackCardView.centerXAnchor.constraint(equalTo: self.teamFrontCardView.centerXAnchor).isActive = true
         teamBackCardView.centerYAnchor.constraint(equalTo: self.teamFrontCardView.centerYAnchor).isActive = true
+    }
+    
+    func darkViewBackAutoLayout() {
+        darkViewBack.translatesAutoresizingMaskIntoConstraints = false
+        darkViewBack.topAnchor.constraint(equalTo: self.teamBackCardView.topAnchor, constant: 0).isActive = true
+        darkViewBack.heightAnchor.constraint(equalToConstant: 80).isActive = true
+        darkViewBack.leadingAnchor.constraint(equalTo: self.teamBackCardView.leadingAnchor).isActive = true
+        darkViewBack.trailingAnchor.constraint(equalTo: self.teamBackCardView.trailingAnchor).isActive = true
+    }
+    
+    func wakeUpTimeLabelBackAutoLayout() {
+        wakeUpTimeLabelBack.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            wakeUpTimeLabelBack.centerXAnchor.constraint(equalTo: darkViewBack.centerXAnchor),
+            wakeUpTimeLabelBack.centerYAnchor.constraint(equalTo: darkViewBack.centerYAnchor),
+
+        ])
+    }
+    
+    func scrollViewAutoLayout() {
+        scrollView.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.activate([
+            scrollView.leadingAnchor.constraint(equalTo: teamBackCardView.leadingAnchor),
+            scrollView.trailingAnchor.constraint(equalTo: teamBackCardView.trailingAnchor),
+            scrollView.topAnchor.constraint(equalTo: wakeUpTimeLabelBack.bottomAnchor, constant: 50),
+            scrollView.bottomAnchor.constraint(equalTo: teamBackCardView.bottomAnchor),
+        ])
+    }
+    
+    func scrollAddViewAutoLayout() {
+        scrollAddView.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.activate([
+            scrollAddView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor),
+            scrollAddView.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor),
+            scrollAddView.topAnchor.constraint(equalTo: scrollView.topAnchor),
+            scrollAddView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor)
+        ])
     }
     
     func switchButtonAutoLayout() {
