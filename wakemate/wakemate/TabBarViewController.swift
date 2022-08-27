@@ -12,7 +12,9 @@ class TabBarViewController: UITabBarController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        UITabBar.appearance().barTintColor = .blue
+//        UITabBar.appearance().barStyle = .black
+        UITabBar.appearance().backgroundColor = .clear
+//        UITabBar.appearance().barTintColor = .systemYellow
 
         let vc1 = HomeViewController()
         let vc2 = TeamDetailViewController()
@@ -22,22 +24,10 @@ class TabBarViewController: UITabBarController {
         
         vc1.tabBarItem = UITabBarItem(title: "Home", image: UIImage(systemName: "house"), selectedImage: UIImage(systemName: "house.fill"))
         vc2.tabBarItem = UITabBarItem(title: "Team", image: UIImage(systemName: "star"), selectedImage: UIImage(systemName: "star.fill"))
-        vc3.tabBarItem = UITabBarItem(title: "Rank", image: UIImage(systemName: "mostViewed"), selectedImage: UIImage(systemName: "mostViewed.fill"))
-        vc4.tabBarItem = UITabBarItem(title: "Theme", image: UIImage(systemName: "heart"), selectedImage: UIImage(systemName: "heart.fill"))
+        vc3.tabBarItem = UITabBarItem(title: "Rank", image: UIImage(named: "teamRank"), selectedImage: UIImage(named: "teamRank-fill"))
+        vc4.tabBarItem = UITabBarItem(title: "Theme", image: UIImage(named: "themeShop"), selectedImage: UIImage(named: "themeShop-fill"))
         vc5.tabBarItem = UITabBarItem(title: "Profile", image: UIImage(systemName: "person"), selectedImage: UIImage(systemName: "person.fill"))
         
         self.viewControllers = [vc1, vc2, vc3, vc4, vc5]
     }
-    
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }

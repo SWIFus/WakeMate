@@ -12,15 +12,12 @@ class StartViewController: UIViewController, UITextFieldDelegate {
     
 //MARK: Values - to post
     
-    struct PostValues {
+    struct Values {
         static var tokenValue: String = "thisistoken"
         static var nameValue: String = "*_thisisusername_*"
     }
     
-    
-//MARK: Label
-    
-//MARK: View
+//MARK: Views
     let wmImageView: UIImageView = {
         let wmImage = UIImageView()
         let wmLogo: UIImage = UIImage(named: "wakemate-logo-start.png")!
@@ -149,49 +146,85 @@ class StartViewController: UIViewController, UITextFieldDelegate {
     
     
     @objc func handleSubmitButtonPress() {
-        print("\(PostValues.tokenValue)\n\(PostValues.nameValue)\n")
+        print("\(Values.tokenValue)\n\(Values.nameValue)\n")
         
         // post
-        guard let url = URL(string: "https://ptsv2.com/t/xz48k-1661410964/post") else {
+//        guard let url = URL(string: "https://ptsv2.com/t/xz48k-1661410964/post") else {
+//            fatalError("Invalid URL")
+//        }
+//
+//        var request = URLRequest(url: url)
+//
+//        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+//        request.httpMethod = "POST"
+//        let postingParams: [String: Any] = [
+//            "token": PostValues.tokenValue,
+//            "name": PostValues.nameValue
+//        ]
+//
+//        let data = try? JSONSerialization.data(withJSONObject: postingParams)
+//
+//        request.httpBody = data
+//
+//        let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
+//            if let error = error {
+//                print(error)
+//                return
+//            }
+//
+//            guard let httpResponse = response as? HTTPURLResponse else {
+//                return
+//            }
+//
+//            guard (200...299).contains(httpResponse.statusCode) else {
+//                return
+//            }
+//
+//            guard let data = data, let str = String(data: data, encoding: .utf8) else {
+//                fatalError("Invalid Data")
+//            }
+        
+//MARK: GET
+        
+        let dataUrlStr = "http://54.175.253.77:3000/team?id=2"
+        
+        guard let url = URL(string: dataUrlStr) else {
             fatalError("Invalid URL")
         }
-
-        var request = URLRequest(url: url)
-
-        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
-        request.httpMethod = "POST"
-        let postingParams: [String: Any] = [
-            "token": PostValues.tokenValue,
-            "name": PostValues.nameValue
-        ]
         
-        let data = try? JSONSerialization.data(withJSONObject: postingParams)
-        
-        request.httpBody = data
-
-        let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
+        let session = URLSession.shared
+        let task = session.dataTask(with: url) { (data, response, error) in
             if let error = error {
                 print(error)
                 return
             }
-
+            
             guard let httpResponse = response as? HTTPURLResponse else {
                 return
             }
-
+            
             guard (200...299).contains(httpResponse.statusCode) else {
                 return
             }
-
-            guard let data = data, let str = String(data: data, encoding: .utf8) else {
+            
+            guard let data = data else {
                 fatalError("Invalid Data")
             }
-
+            
+            do {
+                let decoder = JSONDecoder()
+                let wakemateTeam = try decoder.decode(WmTeam.self, from: data)
+                
+                print(wakemateTeam.team_id)
+            } catch {
+                print(error)
+                print("여기임 ㅡㅡ")
+            }
         }
-
+        
         task.resume()
         
-        if PostValues.nameValue == "*_thisisusername_*" {
+        if Values.nameValue == "*_thisisusername_*" {
             wrongUserName()
         } else {
             showWmTabBarView()
@@ -223,12 +256,12 @@ extension StartViewController {
         wmImageView.contentMode = .scaleAspectFit
         
         // set width & height anchors
-        wmImageView.widthAnchor.constraint(equalToConstant: 200).isActive = true
-        wmImageView.heightAnchor.constraint(equalToConstant: 150).isActive = true
+        wmImageView.widthAnchor.constraint(equalToConstant: 300).isActive = true
+        wmImageView.heightAnchor.constraint(equalToConstant: 300).isActive = true
         
         // set other anchors
         wmImageView.centerXAnchor.constraint(equalTo: self.view.centerXAnchor).isActive = true
-        wmImageView.bottomAnchor.constraint(equalTo: self.view.centerYAnchor, constant: -(self.view.frame.size.height*0.1)).isActive = true
+        wmImageView.centerYAnchor.constraint(equalTo: self.view.topAnchor, constant: self.view.frame.size.height*0.25).isActive = true
         
     }
     func signUpViewAutoLayout() {
@@ -272,7 +305,7 @@ extension StartViewController: ASAuthorizationControllerDelegate {
     func authorizationController(controller: ASAuthorizationController, didCompleteWithAuthorization authorization: ASAuthorization) {
         if let appleIDCredential =  authorization.credential as? ASAuthorizationAppleIDCredential {
             let userIdentifier = appleIDCredential.user
-            PostValues.tokenValue = userIdentifier
+            Values.tokenValue = userIdentifier
             print("USER IDENTIFIER:\n\n\(userIdentifier)\n\n-----\n\n")
             
         }
@@ -300,7 +333,7 @@ extension StartViewController {
     }
 
     func textFieldDidEndEditing(_ textField: UITextField, reason: UITextField.DidEndEditingReason) {
-        PostValues.nameValue = userNameTextField.text ?? "thisisName"
+        Values.nameValue = userNameTextField.text ?? "thisisName"
     }
 
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {

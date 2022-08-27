@@ -151,9 +151,6 @@ class HomeViewController: UIViewController {
 
 }
 
-
-
-
 // MARK: -extension
 extension HomeViewController {
     
@@ -201,7 +198,6 @@ extension HomeViewController {
         tapBtn.topAnchor.constraint(equalTo: clockLabel.bottomAnchor, constant: 110).isActive = true
         tapBtn.leadingAnchor.constraint(equalTo: clockLabel.leadingAnchor).isActive = true
         tapBtn.trailingAnchor.constraint(equalTo: clockLabel.trailingAnchor).isActive = true
-        tapBtn.widthAnchor.constraint(equalToConstant: 200).isActive = true
 
     }
 }

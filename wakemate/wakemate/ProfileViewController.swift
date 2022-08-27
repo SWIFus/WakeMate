@@ -7,6 +7,16 @@
 
 import UIKit
 
+let badgeImageSet = [
+    UIImage(named: "badgeEgg"),
+    UIImage(named: "badgeBread"),
+    UIImage(named: "greenMate"),
+    UIImage(named: "redMate"),
+    UIImage(named: "blueMate"),
+    UIImage(named: "purpleMate"),
+    UIImage(named: "yellowMate"),
+]
+
 class ProfileViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
     private var collectionView: UICollectionView? // badge collection view
@@ -166,7 +176,7 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int { // set badge counts
-        var badgeCount = 10
+        var badgeCount = badgeImageSet.count
         return badgeCount
     }
     

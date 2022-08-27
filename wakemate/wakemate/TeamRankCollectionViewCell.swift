@@ -19,7 +19,7 @@ class TeamRankCollectionViewCell: UICollectionViewCell {
         TeamRankView.layer.cornerRadius = 25.0
         //TeamRankView.backgroundColor = UIColor(red: 0.64, green: 0.64, blue: 0.64, alpha: 1)
         TeamRankView.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 1)
-        TeamRankView.text = "TEAM NAME\nTEAM WAKE UP TIME: 12:00"
+//        TeamRankView.text = "TEAM NAME\nTEAM WAKE UP TIME: 12:00"
         TeamRankView.numberOfLines = 2
         TeamRankView.textColor = UIColor(red: 1, green: 1, blue: 1, alpha: 1)
         TeamRankView.textAlignment = .center

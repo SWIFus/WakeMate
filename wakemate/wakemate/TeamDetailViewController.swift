@@ -7,18 +7,45 @@
 
 import UIKit
 
+let mateImageSet = [
+    UIImage(named: "greenMate"),
+    UIImage(named: "redMate"),
+    UIImage(named: "blueMate"),
+    UIImage(named: "purpleMate"),
+    UIImage(named: "yellowMate"),
+    UIImage(named: "woman1"),
+    UIImage(named: "man1"),
+    UIImage(named: "woman2"),
+    UIImage(named: "man2"),
+    UIImage(named: "woman3"),
+    UIImage(named: "man3"),
+    UIImage(named: "woman4"),
+    UIImage(named: "man4"),
+    UIImage(named: "woman5"),
+    UIImage(named: "man5"),
+]
+
+//let nameSet = [
+//    "Crystal",
+//    "Onve",
+//    "Tintin",
+//    "Mario",
+//    "Daisy",
+//    "Lucio",
+//    "Melli",
+//    "Cypher",
+//    "Fade",
+//    "Keito",
+//]
+
 class TeamDetailViewController: UIViewController {
-    
-//    struct Theme {
-//        let theme = ["Apple Thema", "Banana Thema", "Midnight Thema", "Night Thema","Night Thema","Night Thema"]
-//    }
     
     var frontCard: Bool = true
     
 // MARK: - 팀 타이틀
     let teamLabel: UILabel = {
         let label = UILabel()
-        label.text = "TEAM : BOLD"
+        label.text = "TEAM : NAME"
         label.font =  UIFont.boldSystemFont(ofSize:30)
         label.textColor = UIColor.init(rgb: 0xFFD80D)
         return label
@@ -62,7 +89,8 @@ class TeamDetailViewController: UIViewController {
         let label = UILabel()
         label.text = " Description "
 
-        label.font =  UIFont.boldSystemFont(ofSize:13)
+        label.font =  UIFont(name: "Arimo-BoldItalic", size: 15)
+//        label.font = .boldSystemFont(ofSize: 13)
         label.layer.masksToBounds = true
         label.backgroundColor =  UIColor.init(rgb: 0xFFD80D)
         label.textColor = .white
@@ -93,7 +121,8 @@ class TeamDetailViewController: UIViewController {
 //MARK: - 팀원 설명 파트
     let mateLabel: UILabel = {
         let label = UILabel()
-        label.font =  UIFont.boldSystemFont(ofSize:13)
+//        label.font =  UIFont.boldSystemFont(ofSize:13)
+        label.font = UIFont(name: "Arimo-BoldItalic", size: 15)
         label.text = " Wake up Mate "
         label.layer.masksToBounds = true
         label.backgroundColor =  UIColor.init(rgb: 0xFFD80D)
@@ -102,10 +131,45 @@ class TeamDetailViewController: UIViewController {
         return label
     }()
     
+    let mateView: UIView = {
+        let mate = UIView()
+        
+        mate.backgroundColor = .white
+        mate.layer.backgroundColor = UIColor.clear.cgColor
+
+        mate.layer.cornerRadius = 30
+        
+        return mate
+    }()
+    
+    let mateFlowLayout: MateCollectionViewFlowLayout = {
+        let layout = MateCollectionViewFlowLayout()
+        layout.cellSpacing = 15
+        layout.numOfColumns = 1
+        return layout
+    }()
+    
+    var dataSource = getMateImages()
+    
+    lazy var mateCollectionView: UICollectionView = {
+        let view = UICollectionView(frame: .zero, collectionViewLayout: self.mateFlowLayout)
+        view.isScrollEnabled = true
+        view.showsHorizontalScrollIndicator = true
+        view.showsVerticalScrollIndicator = false
+        view.contentInset = .zero
+        view.backgroundColor = .clear
+        view.clipsToBounds = true
+        view.register(MateCell.self, forCellWithReuseIdentifier: MateCell.identifier)
+        view.translatesAutoresizingMaskIntoConstraints = false
+        
+        return view
+    }()
+    
 //MARK: - 출석률 파트
     let attendanceLabel: UILabel = {
         let label = UILabel()
-        label.font =  UIFont.boldSystemFont(ofSize:13)
+//        label.font =  UIFont.boldSystemFont(ofSize:13)
+        label.font = UIFont(name: "Arimo-BoldItalic", size: 15)
         label.text = " Attendance Rate "
         label.layer.masksToBounds = true
         label.backgroundColor =  UIColor.init(rgb: 0xFFD80D)
@@ -162,10 +226,6 @@ class TeamDetailViewController: UIViewController {
         
     }
     
-    func setDetailCardView() {
-        
-    }
-    
     func setFrontCardView() {
         self.teamFrontCardView.addSubview(descriptionLabel)
         teamFrontCardViewAutoLayout()
@@ -179,6 +239,12 @@ class TeamDetailViewController: UIViewController {
         detailTeamLabelAutoLayout()
         self.teamFrontCardView.addSubview(mateLabel)
         mateLabelAutoLayout()
+        self.teamFrontCardView.addSubview(mateView)
+        mateViewAutoLayout()
+        self.mateView.addSubview(self.mateCollectionView)
+        mateCollectionViewAutoLayout()
+        self.mateCollectionView.dataSource = self
+        self.mateCollectionView.delegate = self
         self.teamFrontCardView.addSubview(attendanceLabel)
         attendanceLabelAutoLayout()
     }
@@ -297,15 +363,34 @@ extension TeamDetailViewController {
         ])
     }
     
+    func mateViewAutoLayout() {
+        mateView.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.activate([
+            mateView.topAnchor.constraint(equalTo: self.mateLabel.bottomAnchor, constant: 10),
+            mateView.leadingAnchor.constraint(equalTo: self.teamFrontCardView.leadingAnchor, constant: 10),
+            mateView.trailingAnchor.constraint(equalTo: self.teamFrontCardView.trailingAnchor, constant: -10),
+            mateView.heightAnchor.constraint(equalToConstant: self.teamFrontCardView.frame.size.height*0.125)
+        ])
+    }
+    
+    func mateCollectionViewAutoLayout() {
+        NSLayoutConstraint.activate([
+            self.mateCollectionView.leadingAnchor.constraint(equalTo: self.mateView.leadingAnchor),
+            self.mateCollectionView.trailingAnchor.constraint(equalTo: self.mateView.trailingAnchor),
+            self.mateCollectionView.centerYAnchor.constraint(equalTo: self.mateView.centerYAnchor),
+            self.mateCollectionView.heightAnchor.constraint(equalToConstant: self.teamFrontCardView.frame.size.height*0.115)
+        ])
+    }
+    
     func attendanceLabelAutoLayout() {
         attendanceLabel.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
-            attendanceLabel.topAnchor.constraint(equalTo: self.detailTeamLabel.topAnchor, constant: 210),
+            attendanceLabel.topAnchor.constraint(equalTo: self.mateView.bottomAnchor, constant: 20),
             attendanceLabel.leadingAnchor.constraint(equalTo: self.teamFrontCardView.leadingAnchor, constant: 10),
         ])
     }
-    
     
     func teamBackCardViewAutoLayout() {
         teamBackCardView.translatesAutoresizingMaskIntoConstraints = false
@@ -314,20 +399,6 @@ extension TeamDetailViewController {
         teamBackCardView.centerXAnchor.constraint(equalTo: self.teamFrontCardView.centerXAnchor).isActive = true
         teamBackCardView.centerYAnchor.constraint(equalTo: self.teamFrontCardView.centerYAnchor).isActive = true
     }
-    
-//    func teamDetailCardViewAutoLayout() {
-//        teamDetailCardView.translatesAutoresizingMaskIntoConstraints = false
-////        teamDetailCardView.widthAnchor.constraint(equalToConstant: 310).isActive = true
-////        teamDetailCardView.heightAnchor.constraint(equalToConstant: 600).isActive = true
-////        teamDetailCardView.centerXAnchor.constraint(equalTo: self.view.centerXAnchor).isActive = true
-////        teamDetailCardView.centerYAnchor.constraint(equalTo: self.view.centerYAnchor, constant: -(height * 0.05)).isActive = true
-//        NSLayoutConstraint.activate([
-//            teamDetailCardView.topAnchor.constraint(equalTo: teamLabel.topAnchor, constant: 70),
-//            teamDetailCardView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 30),
-//            teamDetailCardView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -(self.view.frame.size.height*0.12)),
-//            teamDetailCardView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -30)
-//        ])
-//    }
     
     func switchButtonAutoLayout() {
         let guide = self.view.safeAreaLayoutGuide
@@ -339,4 +410,37 @@ extension TeamDetailViewController {
         switchButton.centerXAnchor.constraint(equalTo: self.view.centerXAnchor).isActive = true
         switchButton.bottomAnchor.constraint(equalTo: self.teamFrontCardView.bottomAnchor, constant: -(height * 0.03)).isActive = true
     }
+}
+
+extension TeamDetailViewController: UICollectionViewDataSource {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        self.dataSource.count
+    }
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MateCell.identifier, for: indexPath) as! MateCell
+        cell.prepare(image: self.dataSource[indexPath.item])
+        return cell
+    }
+}
+
+extension TeamDetailViewController: UICollectionViewDelegateFlowLayout {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        guard let flowLayout = collectionViewLayout as? MateCollectionViewFlowLayout, flowLayout.numOfColumns > 0 else { fatalError() }
+        
+//        let widthOfCells = collectionView.bounds.width - (collectionView.contentInset.left + collectionView.contentInset.right)
+        let widthOfCells = collectionView.bounds.height
+        let widthOfSpacing = CGFloat(flowLayout.numOfColumns - 1) * flowLayout.cellSpacing
+        let width = (widthOfCells - widthOfSpacing) / CGFloat(flowLayout.numOfColumns)
+        
+        return CGSize(width: width, height: width * flowLayout.ratioHeighttoWidth)
+
+    }
+
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        
+    }
+}
+
+func getMateImages() -> [UIImage?] {
+    mateImageSet
 }
